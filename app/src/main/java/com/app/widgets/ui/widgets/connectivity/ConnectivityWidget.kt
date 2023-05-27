@@ -1,10 +1,12 @@
 package com.app.widgets.ui.widgets.connectivity
 
 import android.content.Context
+import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.glance.ColorFilter
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
@@ -13,6 +15,7 @@ import androidx.glance.ImageProvider
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
+import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
 import androidx.glance.layout.Spacer
@@ -27,30 +30,40 @@ import com.app.widgets.R
 
 object ConnectivityWidget : GlanceAppWidget() {
 
+    val wifiEnabled = booleanPreferencesKey("wifiEnabled")
+
     override suspend fun provideGlance(
         context: Context,
         id: GlanceId,
     ) {
-        provideContent { Content() }
+
+        provideContent {
+            val isWifiEnabled = currentState(key = wifiEnabled)
+            Content(
+                wifiEnabled = isWifiEnabled ?: false,
+            )
+        }
     }
 
     @Composable
-    private fun Content() = Column(
+    private fun Content(
+        wifiEnabled: Boolean,
+    ) = Column(
         modifier = GlanceModifier
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 0.2f))
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Icon()
+        Icon(resId = if (wifiEnabled) R.drawable.wifi_on else R.drawable.wifi_off)
         Spacer(modifier = GlanceModifier.defaultWeight())
-        NetworkName()
+        NetworkName(text = if (wifiEnabled) "Enabled" else "Disabled")
     }
 
     @Composable
-    private fun Icon() {
+    private fun Icon(@DrawableRes resId: Int) {
         Image(
-            provider = ImageProvider(R.drawable.wifi_0_bar),
+            provider = ImageProvider(resId),
             contentDescription = null,
             modifier = GlanceModifier.size(40.dp),
             colorFilter = ColorFilter.tint(ColorProvider(Color.White))
@@ -58,8 +71,8 @@ object ConnectivityWidget : GlanceAppWidget() {
     }
 
     @Composable
-    private fun NetworkName() = Text(
-        text = "network-name",
+    private fun NetworkName(text: String) = Text(
+        text = text,
         style = TextStyle(
             fontWeight = FontWeight.Normal,
             color = ColorProvider(Color.White),
