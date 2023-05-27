@@ -7,6 +7,7 @@ import android.net.wifi.WifiManager
 import android.os.Build
 import android.provider.Settings
 import androidx.annotation.RequiresApi
+import com.app.widgets.model.WifiInfo
 
 
 fun Context.changeWifiState(): Boolean {
@@ -32,4 +33,18 @@ private fun Context.changeState() {
 
 private fun Context.wifiManage(): WifiManager {
     return getSystemService(Context.WIFI_SERVICE) as WifiManager
+}
+
+fun Context.getWifiDetails(): WifiInfo {
+    val wifiManager = wifiManage()
+
+    val info = wifiManager.connectionInfo
+
+    return WifiInfo(
+        isWifiEnabled = true,
+        ssid = info.ssid,
+        bssid = info.bssid,
+        frequency = info.frequency,
+        rssi = info.rssi,
+    )
 }
