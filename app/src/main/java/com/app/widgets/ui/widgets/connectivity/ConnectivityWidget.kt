@@ -13,15 +13,20 @@ import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
 import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.Switch
+import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
+import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
+import androidx.glance.layout.fillMaxHeight
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
 import androidx.glance.layout.size
+import androidx.glance.layout.wrapContentWidth
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
@@ -36,7 +41,6 @@ object ConnectivityWidget : GlanceAppWidget() {
         context: Context,
         id: GlanceId,
     ) {
-
         provideContent {
             val isWifiEnabled = currentState(key = wifiEnabled)
             Content(
@@ -48,16 +52,30 @@ object ConnectivityWidget : GlanceAppWidget() {
     @Composable
     private fun Content(
         wifiEnabled: Boolean,
-    ) = Column(
+    ) = Row(
         modifier = GlanceModifier
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 0.2f))
             .padding(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(resId = if (wifiEnabled) R.drawable.wifi_on else R.drawable.wifi_off)
+        Column(
+            modifier = GlanceModifier
+                .wrapContentWidth()
+                .fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Icon(resId = if (wifiEnabled) R.drawable.wifi_on else R.drawable.wifi_off)
+            Spacer(modifier = GlanceModifier.defaultWeight())
+            NetworkName(text = if (wifiEnabled) "Enabled" else "Disabled")
+        }
+
         Spacer(modifier = GlanceModifier.defaultWeight())
-        NetworkName(text = if (wifiEnabled) "Enabled" else "Disabled")
+
+        Switch(
+            checked = wifiEnabled,
+            onCheckedChange = actionRunCallback(ChangeWifiStateAction::class.java),
+        )
     }
 
     @Composable
