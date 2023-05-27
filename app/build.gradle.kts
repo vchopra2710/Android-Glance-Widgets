@@ -68,6 +68,8 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("androidx.glance:glance:1.0.0-beta01")
+    implementation("androidx.glance:glance-appwidget:1.0.0-beta01")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
