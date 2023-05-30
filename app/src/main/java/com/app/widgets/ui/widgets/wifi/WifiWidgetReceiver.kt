@@ -1,4 +1,4 @@
-package com.app.widgets.ui.widgets.connectivity
+package com.app.widgets.ui.widgets.wifi
 
 import android.content.Context
 import android.content.Intent

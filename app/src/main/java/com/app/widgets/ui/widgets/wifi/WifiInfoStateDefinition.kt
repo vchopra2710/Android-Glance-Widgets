@@ -1,4 +1,4 @@
-package com.app.widgets.ui.widgets.connectivity
+package com.app.widgets.ui.widgets.wifi
 
 import android.content.Context
 import androidx.datastore.core.CorruptionException
@@ -32,7 +32,7 @@ object WifiInfoStateDefinition : GlanceStateDefinition<WifiInfo> {
         override suspend fun readFrom(input: InputStream): WifiInfo = try {
             Json.decodeFromString(input.readBytes().decodeToString())
         } catch (exception: Exception) {
-            throw CorruptionException("Could not read weather data: ${exception.message}")
+            throw CorruptionException("Could not read wifi data: ${exception.message}")
         }
 
         override suspend fun writeTo(t: WifiInfo, output: OutputStream) {

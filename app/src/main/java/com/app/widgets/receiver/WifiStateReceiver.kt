@@ -10,8 +10,10 @@ import android.net.wifi.WifiManager.WIFI_STATE_DISABLING
 import android.net.wifi.WifiManager.WIFI_STATE_ENABLED
 import android.net.wifi.WifiManager.WIFI_STATE_ENABLING
 import android.net.wifi.WifiManager.WIFI_STATE_UNKNOWN
-import com.app.widgets.ui.widgets.connectivity.WifiWidgetReceiver
-import com.app.widgets.ui.widgets.connectivity.WifiWidgetReceiver.Companion.ACTION_UPDATE_WIFI_STATE
+import com.app.widgets.ui.widgets.connectivity.ConnectivityReceiver
+import com.app.widgets.ui.widgets.connectivity.ConnectivityReceiver.Companion.ACTION_WIFI_ENABLE_STATUS
+import com.app.widgets.ui.widgets.wifi.WifiWidgetReceiver
+import com.app.widgets.ui.widgets.wifi.WifiWidgetReceiver.Companion.ACTION_UPDATE_WIFI_STATE
 
 fun wifiStateReceiver(): BroadcastReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -26,10 +28,17 @@ fun wifiStateReceiver(): BroadcastReceiver = object : BroadcastReceiver() {
             else -> null
         } ?: return
 
-        val widgetIntent = Intent(context, WifiWidgetReceiver::class.java).apply {
+        val wifiWidgetIntent = Intent(context, WifiWidgetReceiver::class.java).apply {
             this.action = ACTION_UPDATE_WIFI_STATE
         }
 
-        context?.sendBroadcast(widgetIntent)
+        val connectivityWidgetIntent = Intent(context, ConnectivityReceiver::class.java).apply {
+            this.action = ACTION_WIFI_ENABLE_STATUS
+        }
+
+        context?.apply {
+            sendBroadcast(wifiWidgetIntent)
+            sendBroadcast(connectivityWidgetIntent)
+        }
     }
 }
