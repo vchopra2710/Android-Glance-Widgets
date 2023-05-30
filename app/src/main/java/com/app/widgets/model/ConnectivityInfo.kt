@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 data class ConnectivityInfo(
     val isWifiEnabled: Boolean = false,
     val isBluetoothEnabled: Boolean = false,
-    val isAirplaneEnabled: Boolean = true,
+    val isAirplaneEnabled: Boolean = false,
+    val isFlashLightOn: Boolean = false,
 )

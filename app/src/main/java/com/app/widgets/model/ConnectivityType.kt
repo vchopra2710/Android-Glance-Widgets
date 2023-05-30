@@ -2,9 +2,12 @@ package com.app.widgets.model
 
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color
+import androidx.glance.action.actionParametersOf
 import com.app.widgets.R
 import com.app.widgets.ui.widgets.connectivity.ChangeAirplaneModeStateAction
 import com.app.widgets.ui.widgets.connectivity.ChangeBluetoothStateAction
+import com.app.widgets.ui.widgets.connectivity.getClickTypeActionParameterKey
+import com.app.widgets.ui.widgets.connectivity.FlashlightAction
 import com.app.widgets.ui.widgets.wifi.ChangeWifiStateAction
 
 enum class ConnectivityType(
@@ -27,13 +30,23 @@ enum class ConnectivityType(
     AIRPLANE(
         enabledIcon = R.drawable.airplanemode_inactive,
         disabledIcon = R.drawable.airplanemode_active,
-    ),;
+    ),
+    FLASH_LIGHT(
+        enabledIcon = R.drawable.flashlight_on,
+        disabledIcon = R.drawable.flashlight_off,
+    );
 
     companion object {
         fun ConnectivityType.callbackClass() = when (this) {
             WIFI -> ChangeWifiStateAction::class.java
             BLUETOOTH -> ChangeBluetoothStateAction::class.java
             AIRPLANE -> ChangeAirplaneModeStateAction::class.java
+            FLASH_LIGHT -> FlashlightAction::class.java
+        }
+
+        fun ConnectivityType.actionParameters(boolean: Boolean) = when (this) {
+            FLASH_LIGHT -> actionParametersOf(getClickTypeActionParameterKey() to if (boolean) 0 else 1)
+            else -> actionParametersOf()
         }
     }
 }

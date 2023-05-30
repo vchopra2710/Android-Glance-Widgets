@@ -8,6 +8,7 @@ import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.action.ActionParameters
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.action.actionRunCallback
@@ -25,7 +26,9 @@ import androidx.glance.layout.width
 import androidx.glance.unit.ColorProvider
 import com.app.widgets.model.ConnectivityInfo
 import com.app.widgets.model.ConnectivityType
+import com.app.widgets.model.ConnectivityType.Companion.actionParameters
 import com.app.widgets.model.ConnectivityType.Companion.callbackClass
+import com.app.widgets.ui.widgets.connectivity.ConnectivityReceiver.Companion.FLASH_LIGHT_KEY
 
 object ConnectivityWidget : GlanceAppWidget() {
     override suspend fun provideGlance(
@@ -53,6 +56,7 @@ object ConnectivityWidget : GlanceAppWidget() {
                     ConnectivityType.WIFI.name -> connectivityInfo.isWifiEnabled
                     ConnectivityType.BLUETOOTH.name -> connectivityInfo.isBluetoothEnabled
                     ConnectivityType.AIRPLANE.name -> connectivityInfo.isAirplaneEnabled
+                    ConnectivityType.FLASH_LIGHT.name -> connectivityInfo.isFlashLightOn
                     else -> false
                 },
                 connectivityType = it,
@@ -75,7 +79,14 @@ object ConnectivityWidget : GlanceAppWidget() {
                 color = if (enabled) connectivityType.enabledBgColor
                 else connectivityType.disabledBgColor
             )
-            .clickable(actionRunCallback(connectivityType.callbackClass())),
+            .clickable(
+                actionRunCallback(
+                    callbackClass = connectivityType.callbackClass(),
+                    parameters = connectivityType.actionParameters(
+                        boolean = !enabled
+                    )
+                )
+            ),
         contentAlignment = Alignment.Center,
     ) {
         Image(
@@ -93,4 +104,8 @@ object ConnectivityWidget : GlanceAppWidget() {
             modifier = GlanceModifier.size(40.dp)
         )
     }
+}
+
+fun getClickTypeActionParameterKey(): ActionParameters.Key<Int> {
+    return ActionParameters.Key(FLASH_LIGHT_KEY)
 }

@@ -12,6 +12,7 @@ import com.app.widgets.model.ConnectivityInfo
 import com.app.widgets.utils.isAirplaneEnabled
 import com.app.widgets.utils.isBluetoothEnabled
 import com.app.widgets.utils.isWifiEnabled
+import com.app.widgets.utils.logd
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -36,10 +37,25 @@ class ConnectivityReceiver : GlanceAppWidgetReceiver() {
         super.onReceive(context, intent)
         val action = intent.action ?: return
         if (action !in actionList) return
-        observe(context = context)
+
+        val flashLightToggled = if (action == ACTION_TOGGLE_FLASH_LIGHT) {
+            intent.getBooleanExtra(FLASH_LIGHT_KEY, false)
+        } else {
+            false
+        }
+
+        observe(
+            context = context,
+            flashLightToggled = flashLightToggled,
+        )
+
+
     }
 
-    private fun observe(context: Context) {
+    private fun observe(
+        context: Context,
+        flashLightToggled: Boolean? = null,
+    ) {
         coroutineScope.launch(Dispatchers.IO) {
             val glanceId = GlanceAppWidgetManager(context)
                 .getGlanceIds(ConnectivityWidget::class.java)
@@ -59,6 +75,7 @@ class ConnectivityReceiver : GlanceAppWidgetReceiver() {
                     isWifiEnabled = isWifiEnabled,
                     isBluetoothEnabled = isBluetoothEnabled,
                     isAirplaneEnabled = isAirplaneEnabled,
+                    isFlashLightOn = flashLightToggled ?: it.isFlashLightOn,
                 )
             }
 
@@ -70,10 +87,13 @@ class ConnectivityReceiver : GlanceAppWidgetReceiver() {
         const val ACTION_WIFI_ENABLE_STATUS = "ACTION_WIFI_ENABLE_STATUS"
         const val ACTION_BLUETOOTH_ENABLE_STATUS = "ACTION_BLUETOOTH_ENABLE_STATUS"
         const val ACTION_AIRPLANE_ENABLE_STATUS = "ACTION_AIRPLANE_ENABLE_STATUS"
+        const val ACTION_TOGGLE_FLASH_LIGHT = "ACTION_TOGGLE_FLASH_LIGHT"
+        const val FLASH_LIGHT_KEY = "FLASH_LIGHT_KEY"
         val actionList = listOf(
             ACTION_WIFI_ENABLE_STATUS,
             ACTION_BLUETOOTH_ENABLE_STATUS,
-            ACTION_AIRPLANE_ENABLE_STATUS
+            ACTION_AIRPLANE_ENABLE_STATUS,
+            ACTION_TOGGLE_FLASH_LIGHT
         )
     }
 }
