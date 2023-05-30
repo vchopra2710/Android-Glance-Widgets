@@ -34,6 +34,7 @@ import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import com.app.widgets.R
 import com.app.widgets.model.WifiInfo
+import com.app.widgets.ui.widgets.actions.ChangeWifiStateAction
 import com.app.widgets.utils.toWifiSignalIcon
 
 object WifiWidget : GlanceAppWidget() {

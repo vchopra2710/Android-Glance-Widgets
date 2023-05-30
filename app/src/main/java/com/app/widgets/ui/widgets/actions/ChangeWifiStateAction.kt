@@ -1,4 +1,4 @@
-package com.app.widgets.ui.widgets.wifi
+package com.app.widgets.ui.widgets.actions
 
 import android.content.Context
 import android.content.Intent
@@ -7,6 +7,7 @@ import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.action.ActionCallback
 import com.app.widgets.ui.widgets.connectivity.ConnectivityReceiver
 import com.app.widgets.ui.widgets.connectivity.ConnectivityReceiver.Companion.ACTION_WIFI_ENABLE_STATUS
+import com.app.widgets.ui.widgets.wifi.WifiWidgetReceiver
 import com.app.widgets.ui.widgets.wifi.WifiWidgetReceiver.Companion.ACTION_CHANGE_WIFI_STATE
 
 class ChangeWifiStateAction : ActionCallback {

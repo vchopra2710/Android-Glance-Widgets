@@ -50,18 +50,18 @@ object ConnectivityWidget : GlanceAppWidget() {
     ) {
         val connectivityList = ConnectivityType.values().toList()
 
-        connectivityList.forEach {
+        connectivityList.forEach {connectivityType->
             ConnectivityIcon(
-                enabled = when (it.name) {
+                enabled = when (connectivityType.name) {
                     ConnectivityType.WIFI.name -> connectivityInfo.isWifiEnabled
                     ConnectivityType.BLUETOOTH.name -> connectivityInfo.isBluetoothEnabled
                     ConnectivityType.AIRPLANE.name -> connectivityInfo.isAirplaneEnabled
                     ConnectivityType.FLASH_LIGHT.name -> connectivityInfo.isFlashLightOn
                     else -> false
                 },
-                connectivityType = it,
+                connectivityType = connectivityType,
             )
-            if (connectivityList.indexOf(it) != connectivityList.size - 1) {
+            if (connectivityList.indexOf(connectivityType) != connectivityList.size - 1) {
                 Spacer(modifier = GlanceModifier.width(8.dp))
             }
         }
@@ -73,8 +73,8 @@ object ConnectivityWidget : GlanceAppWidget() {
         connectivityType: ConnectivityType,
     ) = Box(
         modifier = GlanceModifier
-            .size(70.dp)
-            .cornerRadius(35.dp)
+            .size(60.dp)
+            .cornerRadius(30.dp)
             .background(
                 color = if (enabled) connectivityType.enabledBgColor
                 else connectivityType.disabledBgColor
@@ -101,7 +101,7 @@ object ConnectivityWidget : GlanceAppWidget() {
                     else connectivityType.disabledIconTint
                 )
             ),
-            modifier = GlanceModifier.size(40.dp)
+            modifier = GlanceModifier.size(35.dp)
         )
     }
 }

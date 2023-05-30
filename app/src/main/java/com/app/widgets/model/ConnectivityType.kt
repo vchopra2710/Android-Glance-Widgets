@@ -4,11 +4,11 @@ import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color
 import androidx.glance.action.actionParametersOf
 import com.app.widgets.R
-import com.app.widgets.ui.widgets.connectivity.ChangeAirplaneModeStateAction
-import com.app.widgets.ui.widgets.connectivity.ChangeBluetoothStateAction
+import com.app.widgets.ui.widgets.actions.ChangeAirplaneModeStateAction
+import com.app.widgets.ui.widgets.actions.ChangeBluetoothStateAction
 import com.app.widgets.ui.widgets.connectivity.getClickTypeActionParameterKey
-import com.app.widgets.ui.widgets.connectivity.FlashlightAction
-import com.app.widgets.ui.widgets.wifi.ChangeWifiStateAction
+import com.app.widgets.ui.widgets.actions.FlashlightAction
+import com.app.widgets.ui.widgets.actions.ChangeWifiStateAction
 
 enum class ConnectivityType(
     @DrawableRes val enabledIcon: Int,
