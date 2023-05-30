@@ -5,8 +5,8 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.Network
 import com.app.widgets.model.WifiInfo
-import com.app.widgets.ui.widgets.connectivity.WifiWidgetReceiver
-import com.app.widgets.ui.widgets.connectivity.WifiWidgetReceiver.Companion.KEY_WIFI_INFO
+import com.app.widgets.ui.widgets.wifi.WifiWidgetReceiver
+import com.app.widgets.ui.widgets.wifi.WifiWidgetReceiver.Companion.KEY_WIFI_INFO
 import kotlinx.serialization.json.Json
 fun wifiNetworkCallback(context: Context): ConnectivityManager.NetworkCallback =
     object : ConnectivityManager.NetworkCallback() {

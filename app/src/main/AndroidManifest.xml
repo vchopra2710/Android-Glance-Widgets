@@ -4,9 +4,15 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
 
     <application
         android:name=".WidgetApplication"
@@ -32,7 +38,7 @@
         </activity>
 
         <receiver
-            android:name=".ui.widgets.connectivity.WifiWidgetReceiver"
+            android:name=".ui.widgets.wifi.WifiWidgetReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -44,7 +50,7 @@
         </receiver>
 
         <receiver
-            android:name=".ui.widgets.flashlight.FlashlightWidgetReceiver"
+            android:name=".ui.widgets.connectivity.ConnectivityReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -52,7 +58,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/flashlight_widget" />
+                android:resource="@xml/connectivity_widget" />
         </receiver>
     </application>
 

@@ -5,20 +5,19 @@ import android.content.Intent
 import androidx.glance.GlanceId
 import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.action.ActionCallback
-import com.app.widgets.ui.widgets.connectivity.WifiWidgetReceiver.Companion.ACTION_CHANGE_WIFI_STATE
+import com.app.widgets.utils.toggleAirplaneMode
 
-class ChangeWifiStateAction : ActionCallback {
+class ChangeAirplaneModeStateAction:ActionCallback {
     override suspend fun onAction(
         context: Context,
         glanceId: GlanceId,
         parameters: ActionParameters
     ) {
-
-        val widgetIntent = Intent(context, WifiWidgetReceiver::class.java).apply {
-            this.action = ACTION_CHANGE_WIFI_STATE
+        context.toggleAirplaneMode()
+        val connectivityWidgetIntent = Intent(context, ConnectivityReceiver::class.java).apply {
+            this.action = ConnectivityReceiver.ACTION_AIRPLANE_ENABLE_STATUS
         }
 
-        context.sendBroadcast(widgetIntent)
+        context.sendBroadcast(connectivityWidgetIntent)
     }
-
 }

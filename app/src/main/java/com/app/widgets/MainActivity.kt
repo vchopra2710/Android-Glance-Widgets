@@ -1,6 +1,8 @@
 package com.app.widgets
 
+import android.bluetooth.BluetoothAdapter
 import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -10,6 +12,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
+import com.app.widgets.receiver.airplaneStateReceiver
+import com.app.widgets.receiver.bluetoothStateReceiver
 import com.app.widgets.receiver.wifiStateReceiver
 import com.app.widgets.ui.theme.WidgetsTheme
 import com.app.widgets.ui.widgets.index.WidgetsIndexScreen
@@ -36,8 +40,16 @@ class MainActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
         val wifiStateReceiver = wifiStateReceiver()
-        val intent = IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION)
-        registerReceiver(wifiStateReceiver, intent)
+        val intentWifi = IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION)
+        registerReceiver(wifiStateReceiver, intentWifi)
+
+        val bluetoothReceiver = bluetoothStateReceiver()
+        val intentBluetooth = IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
+        registerReceiver(bluetoothReceiver, intentBluetooth)
+
+        val airplaneReceiver = airplaneStateReceiver()
+        val intentAirplane = IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED)
+        registerReceiver(airplaneReceiver, intentAirplane)
 
         if (networkCallback == null) {
             networkCallback = wifiNetworkCallback(this)
