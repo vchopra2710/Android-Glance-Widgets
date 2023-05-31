@@ -50,7 +50,7 @@ object ConnectivityWidget : GlanceAppWidget() {
     ) {
         val connectivityList = ConnectivityType.values().toList()
 
-        connectivityList.forEach {connectivityType->
+        connectivityList.forEach { connectivityType ->
             ConnectivityIcon(
                 enabled = when (connectivityType.name) {
                     ConnectivityType.WIFI.name -> connectivityInfo.isWifiEnabled
@@ -101,7 +101,7 @@ object ConnectivityWidget : GlanceAppWidget() {
                     else connectivityType.disabledIconTint
                 )
             ),
-            modifier = GlanceModifier.size(35.dp)
+            modifier = GlanceModifier.size(36.dp)
         )
     }
 }

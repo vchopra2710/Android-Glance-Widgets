@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat.getSystemService
 
 fun Context.isBluetoothEnabled(): Boolean {
     val bluetoothManager = getSystemService(this, BluetoothManager::class.java)
-    val bluetoothAdapter = bluetoothManager?.getAdapter()
+    val bluetoothAdapter = bluetoothManager?.adapter
     return bluetoothAdapter?.isEnabled ?: false
 }
 
