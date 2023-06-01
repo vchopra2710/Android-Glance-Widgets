@@ -12,7 +12,6 @@ import com.app.widgets.model.ConnectivityInfo
 import com.app.widgets.utils.isAirplaneEnabled
 import com.app.widgets.utils.isBluetoothEnabled
 import com.app.widgets.utils.isWifiEnabled
-import com.app.widgets.utils.logd
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -44,12 +43,7 @@ class ConnectivityReceiver : GlanceAppWidgetReceiver() {
             false
         }
 
-        observe(
-            context = context,
-            flashLightToggled = flashLightToggled,
-        )
-
-
+        observe(context = context, flashLightToggled = flashLightToggled)
     }
 
     private fun observe(
@@ -67,14 +61,11 @@ class ConnectivityReceiver : GlanceAppWidgetReceiver() {
                 definition = ConnectivityStateDefinition,
                 glanceId = glanceId
             ) {
-                val isWifiEnabled = context.isWifiEnabled()
-                val isBluetoothEnabled = context.isBluetoothEnabled()
-                val isAirplaneEnabled = context.isAirplaneEnabled()
 
                 ConnectivityInfo(
-                    isWifiEnabled = isWifiEnabled,
-                    isBluetoothEnabled = isBluetoothEnabled,
-                    isAirplaneEnabled = isAirplaneEnabled,
+                    isWifiEnabled = context.isWifiEnabled(),
+                    isBluetoothEnabled = context.isBluetoothEnabled(),
+                    isAirplaneEnabled = context.isAirplaneEnabled(),
                     isFlashLightOn = flashLightToggled ?: it.isFlashLightOn,
                 )
             }

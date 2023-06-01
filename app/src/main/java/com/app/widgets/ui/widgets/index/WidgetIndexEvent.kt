@@ -1,5 +1,8 @@
 package com.app.widgets.ui.widgets.index
 
 sealed class WidgetIndexEvent {
-    object EnableConnectivity : WidgetIndexEvent()
+    object ToggleWifi : WidgetIndexEvent()
+    object ToggleBluetooth : WidgetIndexEvent()
+    object ToggleAirplane : WidgetIndexEvent()
+    object ToggleFlashlight : WidgetIndexEvent()
 }

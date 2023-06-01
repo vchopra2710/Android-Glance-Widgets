@@ -4,8 +4,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.app.widgets.ui.widgets.connectivity.ConnectivityReceiver
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-fun airplaneStateReceiver(): BroadcastReceiver = object : BroadcastReceiver() {
+@AndroidEntryPoint
+class AirplaneStateReceiver @Inject constructor() : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         val action = intent?.action ?: return

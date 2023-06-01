@@ -72,6 +72,9 @@ dependencies {
     implementation("androidx.glance:glance:1.0.0-beta01")
     implementation("androidx.glance:glance-appwidget:1.0.0-beta01")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation("androidx.lifecycle:lifecycle-service:2.6.1")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.datastore:datastore-preferences-core:1.0.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

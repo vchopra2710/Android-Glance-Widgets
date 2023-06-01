@@ -18,7 +18,7 @@ import com.app.widgets.ui.widgets.index.WidgetIndexEvent.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WidgetsIndexScreen(
-    viewModel: WidgetIndexViewModel = hiltViewModel()
+    viewModel: WidgetIndexViewModel = hiltViewModel(),
 ) = Scaffold(
     modifier = Modifier.navigationBarsPadding(),
 ) { paddingValues ->
@@ -41,17 +41,19 @@ private fun WidgetIndex(
         .fillMaxSize()
         .padding(paddingValues)
 ) {
-    state.widgetIndexContent.forEach {
-        item {
-            ToggleView(
-                text = it.text,
-                checked = when (it.action) {
-                    EnableConnectivity -> state.connectivityEnabled
-                    else -> false
-                },
-                onCheckedChange = { onEvent(it.action) },
-            )
-        }
+    items(state.widgetIndexContent.size) {
+        val widgetContent = state.widgetIndexContent[it]
+        ToggleView(
+            text = widgetContent.text,
+            enabledIcon = widgetContent.enableIcon,
+            disabledIcon = widgetContent.disableIcon,
+            checked = when (widgetContent.action) {
+                ToggleWifi -> state.wifiToggled
+                ToggleBluetooth -> state.bluetoothToggled
+                ToggleAirplane -> state.airplaneToggled
+                ToggleFlashlight -> state.flashlightToggled
+            },
+            onCheckedChange = { onEvent(widgetContent.action) },
+        )
     }
-
 }

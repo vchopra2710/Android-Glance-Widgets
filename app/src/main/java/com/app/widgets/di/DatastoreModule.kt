@@ -1,7 +1,7 @@
 package com.app.widgets.di
 
 import android.content.Context
-import android.net.wifi.WifiManager
+import com.app.widgets.datastore.WidgetDatastore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,12 +11,9 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object WifiModule {
-    @Provides
+object DatastoreModule {
+
     @Singleton
-    fun provideWifiManagerService(
-        @ApplicationContext context: Context,
-    ): WifiManager {
-        return context.getSystemService(Context.WIFI_SERVICE) as WifiManager
-    }
+    @Provides
+    fun provideDatastore(@ApplicationContext context: Context): WidgetDatastore = WidgetDatastore(context = context)
 }
